@@ -26,8 +26,8 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            sylvaine/github-actions-example
-            ghcr.io/sylvaine/github-actions-example
+            ${{ github.repository }}
+            ghcr.io${{ github.repository }}
           tags: |
             type=schedule
             type=ref,event=branch
