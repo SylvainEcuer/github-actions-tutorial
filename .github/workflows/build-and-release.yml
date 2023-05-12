@@ -33,13 +33,19 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
+
+      - name: set lower case repo name
+        run: |
+          echo "REPOSITORY_NAME_LC=${REPOSITORY_NAME,,}" >>${GITHUB_ENV}
+        env:
+          REPOSITORY_NAME: '${{ github.repository_name }}'
+
       - name: Build and push        
         uses: docker/build-push-action@v4
         with:
           context: .
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ghcr.io/sylvainecuer/github-actions-tutorial:latest
+          tags: ghcr.io/${{ github.repository_name }}:latest
           cache-to: type=gha,mode=max
           cache-from: type=gha
