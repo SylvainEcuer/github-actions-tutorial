@@ -1,7 +1,7 @@
 name: build-and-release
 on:
   workflow_run:
-    workflows: ["Run Tests"]
+    workflows: ["main-worklfow"]
     push:
       branches: [master]
     types: 
@@ -13,7 +13,6 @@ env:
 jobs:
   # Push image to GitHub Packages.
   push-to-registry-amd64:
-    needs: [run-tests]
     runs-on: ubuntu-latest
     permissions:
       packages: write
